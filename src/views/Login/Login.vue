@@ -101,7 +101,7 @@ export default {
       phoneVerification: false, // 手机号码正则验证
       phoneNotNull: false, // 手机号码不能为空
       phoneVerificationCodeNotNull: false, // 验证码不能为空
-      captchaUrl: process.env.API_HOST + '/api/svg_captcha?time'
+      captchaUrl: process.env.API_HOST + 'api/svg_captcha?time'
     }
   },
   methods: {
