@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
       '/interface': {
         // target: 'http://devserviceapi.mynatapp.cc/',  // 跨域请求的地址
-        target: process.env.API_HOST,  // 跨域请求的地址
+        target: 'http://localhost:3000/',  // 跨域请求的地址
         changeOrigin: true,
         pathRewrite: {
           '^/interface': ''

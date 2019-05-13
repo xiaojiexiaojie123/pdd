@@ -101,7 +101,7 @@ export default {
       phoneVerification: false, // 手机号码正则验证
       phoneNotNull: false, // 手机号码不能为空
       phoneVerificationCodeNotNull: false, // 验证码不能为空
-      captchaUrl: process.env.API_HOST + 'api/svg_captcha?time'
+      captchaUrl: process.env.API_HOST + '/api/svg_captcha?time'
     }
   },
   methods: {
@@ -128,6 +128,7 @@ export default {
         }, 1000)
         // 发送验证码请求
         const res = await getVerification({phone: this.phoneNum})
+        alert('验证码：' + res.phoneCode)
         console.log(res)
         // res.then(result => {
         //   console.log(result)
