@@ -20,14 +20,16 @@ export default {
       selectedId: 0,
       items: [
         {label: '热门', path: '/home/hot'},
-        {label: '服饰', path: '/home/dress'},
-        {label: '鞋包', path: '/home/box'},
-        {label: '母婴', path: '/home/mbaby'},
-        {label: '百货', path: '/home/general'},
-        {label: '食品', path: '/home/food'},
-        {label: '内衣', path: '/home/shirt'},
-        {label: '男装', path: '/home/man'},
-        {label: '电器', path: '/home/ele'}
+        {label: '男装', path: '/home/dress'},
+        {label: '女装', path: '/home/box'},
+        {label: '童装', path: '/home/mbaby'},
+        {label: '婴儿装', path: '/home/general'},
+        {label: 'T恤', path: '/home/food'},
+        {label: '衬衫', path: '/home/shirt'},
+        {label: '牛仔裤', path: '/home/man'},
+        {label: '休闲裤', path: '/home/ele'},
+        {label: '短裤', path: '/home/ele'},
+        {label: '裙装', path: '/home/ele'}
       ],
       options: {
         activeColor: '#e9232c'

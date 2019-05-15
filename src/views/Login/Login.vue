@@ -230,7 +230,7 @@ export default {
     },
     // 返回
     back () {
-      this.$router.go(-1)
+      this.$router.replace('/home')
     }
   }
 }

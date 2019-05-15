@@ -42,7 +42,7 @@
     </div>
     <div class="setting">
       <ul>
-        <li>
+        <!-- <li>
           <span class="icon-16"></span>
           <span>新人红包</span>
         </li>
@@ -73,7 +73,7 @@
         <li>
           <span class="icon-17"></span>
           <span>官方客服</span>
-        </li>
+        </li> -->
         <router-link tag="li" to="/setting">
           <span class="icon-4"></span>
           <span>设置</span>

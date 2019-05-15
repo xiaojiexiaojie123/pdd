@@ -1,11 +1,12 @@
 <template>
   <div class="me">
-    <select-login v-if="!userInfo.user_id" />
+    <Login v-if="!userInfo.user_id" />
     <me-top v-else />
   </div>
 </template>
 
 <script>
+import Login from './../Login/Login'
 import SelectLogin from './../Login/SelectLogin'
 import MeTop from './Metop'
 import { mapState } from 'vuex'
@@ -20,7 +21,8 @@ export default {
   },
   components: {
     SelectLogin,
-    MeTop
+    MeTop,
+    Login
   }
 }
 </script>

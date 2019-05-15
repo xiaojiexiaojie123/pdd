@@ -21,6 +21,9 @@ export default {
   data () {
     return {
     }
+  },
+  created () {
+    this.$router.replace('/login')
   }
 }
 </script>

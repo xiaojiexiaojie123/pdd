@@ -1,7 +1,7 @@
 <template>
   <div class="shop-container">
     <ul class="shop-list">
-      <li class="shop-item" v-for="(item, index) in homeshoplist" v-bind:key=index v-if="homeshoplist">
+      <li class="shop-item" v-for="(item, index) in homeshoplist" v-bind:key=index v-if="homeshoplist" @click="goShopDetail(item.goods_id)">
         <img :src="item.image_url" alt="">
         <h4 class="item-title">{{ item.goods_name }}</h4>
         <div class="item-bottom">
@@ -13,7 +13,7 @@
             <div class="item-user">
               <img v-for="(bubble, index) in item.bubble" v-bind:key=index :src="bubble.avatar" v-if="item.bubble" alt="">
             </div>
-            <div class="item-buy" @click="addShopCart(item, index)">
+            <div class="item-buy" @click.stop="addShopCart(item, index)">
               加入购物
               <div :class="{addSucc: currentIndex === index}">+1</div>  
             </div>
@@ -32,11 +32,8 @@ export default {
       currentIndex: null // 加入购物车商品索引
     }
   },
-  computed: {
-    // 获取首页商品列表
-    homeshoplist () {
-      return this.$store.state.homeshoplist
-    }
+  props: {
+    homeshoplist: Array
   },
   methods: {
     // 加入购物车
@@ -46,6 +43,9 @@ export default {
         this.currentIndex = null
       }, 1000)
       this.$store.dispatch('addShopCart', goods)
+    },
+    goShopDetail (goods_id) {
+      this.$router.push({path: '/shop_detail', query: {goods_id}})
     }
   }
 }

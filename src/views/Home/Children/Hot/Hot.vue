@@ -11,15 +11,15 @@
     </div>
 
     <!-- 中间导航 -->
-    <hot-nav></hot-nav>
+    <!-- <hot-nav></hot-nav> -->
 
     <!-- 广告位 -->
-    <div class="ad">
+    <!-- <div class="ad">
       <img src="./../../imgs/hot_ad/home_ad.gif" width="100%" alt="">
-    </div>
+    </div> -->
 
     <!-- 商品列表 -->
-    <shop-list></shop-list>
+    <shop-list :homeshoplist="homeshoplist" />
 
   </div>
 </template>
@@ -34,17 +34,30 @@ export default {
   name: 'hot',
   data () {
     return {
-      swipeHeight: 0
+      swipeHeight: 0,
+      homecasual: [
+        {imgurl: require('./img/s1.png')},
+        {imgurl: require('./img/s2.png')},
+        {imgurl: require('./img/s3.png')},
+        {imgurl: require('./img/s4.png')},
+        {imgurl: require('./img/s5.png')},
+        {imgurl: require('./img/s6.png')},
+        {imgurl: require('./img/s7.png')},
+        {imgurl: require('./img/s8.png')}
+      ]
     }
   },
   computed: {
-    ...mapState(['homecasual'])
+    // 获取首页商品列表
+    homeshoplist () {
+      return this.$store.state.homeshoplist
+    }
   },
   mounted () {
     // 设置轮播图外框的高度
     this.setSwipeHeight()
     // 请求轮播数据
-    this.$store.dispatch('reqHomecasual')
+    // this.$store.dispatch('reqHomecasual')
     // 获取首页导航
     this.$store.dispatch('reqHomeNavList')
     // 获取首页商品列表

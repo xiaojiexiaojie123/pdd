@@ -2,11 +2,11 @@
   <div class="search-panel">
     <div class="search-input">
       <div class="search-inner">
-        <input type="text" />
+        <input type="text" v-model="searchText" />
       </div>
-      <div class="cancle" @click="cancelSearch">取消</div>
+      <div class="cancle" @click="confirmSearch(searchText)">确定</div>
     </div>
-    <div class="late-search">
+    <div class="late-search" v-show="showSearchTip">
       <div class="title">
         <div class="name">
           最近搜索
@@ -22,7 +22,7 @@
         <li>黑头仪</li>
       </ul>
     </div>
-    <div class="hot-search">
+    <div class="hot-search" v-show="showSearchTip">
       <div class="title">
         <div class="hot-name">
           热门搜索
@@ -45,19 +45,26 @@ export default {
   name: 'search-panel',
   data () {
     return {
+      searchText: ''
     }
   },
   props: {
-    cancelSearch: Function
+    confirmSearch: Function,
+    showSearchTip: Boolean
   }
+  // methods: {
+  //   confirmSearch () {
+  //     console.log(this.searchText)
+  //   }
+  // }
 }
 </script>
 
 <style lang="stylus" scoped>
 @import './../../../common/stylus/mixins.styl'
 .search-panel
-  position fixed
-  top 0
+  // position fixed
+  // top 0
   width 100%
   max-width 640px
   height 100%

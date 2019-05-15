@@ -1,27 +1,20 @@
 <template>
   <div class="shopDetail">
-
-    <!--1.轮播图-->
-    <!-- <div class="swipe" ref="swipe">
-      <mt-swipe :auto="4000">
-        <mt-swipe-item v-for="(item, index) in homecasual" v-bind:key=index>
-          <img :src="item.imgurl" @click="$router.push(item.detail)" alt="" width="100%" >
-        </mt-swipe-item>
-      </mt-swipe>
-    </div> -->
-
     <div class="content">
+      <div class="good-img">
+        <img :src="goodInfo.image_url" />
+      </div>
       <div class="number">
         <div class="price">
-          <span class="normal-price"><span class="rmb">￥</span>26.9</span>
-          <span class="market-price">￥228</span>
+          <span class="normal-price"><span class="rmb">￥</span>{{(goodInfo.normal_price / 100).toFixed(1)}}</span>
+          <span class="market-price">￥{{goodInfo.market_price / 100}}</span>
         </div>
         <div class="sales">
-          已拼10万+件
+          {{goodInfo.sales_tip}}
         </div>
       </div>
       <div class="title">
-        韩梵迪 秋冬中长款毛衣女修身显瘦打底连衣裙针织衫中领蕾丝拼接韩梵迪
+        {{goodInfo.short_name}}
       </div>
       <div class="promise">
         <span class="left">全场包邮 · 7点退换 · 假一赔十</span>
@@ -67,10 +60,27 @@
 </template>
 
 <script>
+import { getShopDetail } from './../../api/api.js'
 export default {
   name: 'shopDetail',
   data () {
     return {
+      goodInfo: {}
+    }
+  },
+  mounted () {
+    this.getShopDetail()
+  },
+  methods: {
+    getShopDetail () {
+      var goods_id = this.$route.query.goods_id;
+      const res = getShopDetail({goods_id})
+      res.then(result => {
+        console.log(result)
+        if (result.message.code === 200) {
+          this.goodInfo = result.message.good_info
+        }
+      })
     }
   }
 }
@@ -78,6 +88,9 @@ export default {
 
 <style lang="stylus" scoped>
 .content
+  .good-img
+    img
+      width 100%
   .number
     padding .2rem .2rem
     background #fff
@@ -156,7 +169,7 @@ export default {
         img
           width 100%
           height 100%
-          
+          display block
       span
         font-size .24rem
         color #151516

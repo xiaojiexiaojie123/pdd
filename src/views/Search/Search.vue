@@ -2,149 +2,50 @@
   <div class="search">
 
     <!-- 搜索条 -->
-    <search-nav :cancelSearch="cancelSearch" />
-
-    <!-- 商品 -->
-    <div class="search-shop">
-
-      <!-- 商品菜单 -->
-      <div class="shop-menu" ref="shopMenu">
-        <ul class="content">
-          <li
-            v-for="(item, index) in searchgoodslist"
-            :key=index
-            @click="changePage(index)"
-            ref="menuList">
-            <span :class="{current: currentIndex === index}">{{ item.name }}</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- 商品列表 -->
-      <div class="shop-list" ref="shopList">
-        <ul class="content" ref="shopListContent">
-          <li class="shop-item" v-for="(shopItem, index) in searchgoodslist" :key=index>
-            <div class="title">
-              <span class="item-name">{{ shopItem.name }}</span>
-              <span class="more">查看更多＞</span>
-            </div>
-            <div class="phoneTag" v-if="shopItem.category">
-              <ul>
-                <li class="phone" v-for="(imgItem, index) in shopItem.category" :key=index>
-                  <img :src="imgItem.icon" alt="">
-                </li>
-              </ul>
-            </div>
-            <ul class="item-content">
-              <li v-for="(item, index) in shopItem.items" :key=index>
-                <img :src="item.icon" alt="">
-                <p>{{ item.title }}</p>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <!-- <search-nav :cancelSearch="cancelSearch" /> -->
 
     <!-- 搜索界面 -->
-    <search-panel v-if="panelShow" :cancelSearch="cancelSearch" />
+    <search-panel :confirmSearch="confirmSearch" :showSearchTip="showSearchTip" />
+
+    <!-- 商品列表 -->
+    <shop-list :homeshoplist="homeshoplist" />
+
   </div>
 </template>
 
 <script>
-import SearchNav from './children/searchNav'
 import SearchPanel from './children/searchPanel'
-import BScroll from 'better-scroll'
+import { getSearchList } from './../../api/api.js'
+import ShopList from './../Home/Children/Hot/HotShopList'
 export default {
   name: 'search',
   data () {
     return {
       scrollY: 0, // 右侧列表滑动的y轴坐标
       rightLiTops: [], // 所有分类的头部位置
-      panelShow: false
+      panelShow: false,
+      homeshoplist: [],
+      showSearchTip: true
     }
   },
   mounted () {
     this.$store.dispatch('reqSearchGoods')
   },
-  computed: {
-    // 获取商品列表
-    searchgoodslist () {
-      return this.$store.state.searchgoodslist
-    },
-    // 菜单索引值
-    currentIndex () {
-      return this.rightLiTops.findIndex((item, index) => {
-        this._leftScroll(index)
-        return this.scrollY >= item && this.scrollY < this.rightLiTops[index + 1]
-      })
-    }
-  },
-  watch: {
-    searchgoodslist () {
-      this.init()
-    }
-  },
   methods: {
-    init () {
-      this.$nextTick(() => {
-        this.renderScroll()
-        this.initRightLitops()
+    // 确定搜索
+    confirmSearch (searchText) {
+      const res = getSearchList({keyword: searchText})
+      res.then(result => {
+        if (result.message.code === 200) {
+          this.showSearchTip = false
+          this.homeshoplist = result.message.search_list
+        }
       })
-    },
-    // 1、渲染左右滚动条
-    renderScroll () {
-      // 左边菜单
-      this.menuScroll = new BScroll(this.$refs.shopMenu, {
-        click: true
-      })
-      // 右边商品
-      this.shopListScroll = new BScroll(this.$refs.shopList, {
-        probeType: 3
-      })
-      // 监听商品滚动时间
-      this.shopListScroll.on('scroll', this.scroll)
-    },
-    // 2、获取每个商品的离顶部的距离
-    initRightLitops () {
-      // 1. 定义临时数组
-      const tempArr = []
-      // 2. 定义变量记录高度
-      let top = 0
-      tempArr.push(top)
-      // 3. 遍历li标签,取出高度
-      let liTops = this.$refs.shopListContent.getElementsByClassName('shop-item')
-      Array.prototype.slice.call(liTops).forEach(item => {
-        top += item.clientHeight
-        tempArr.push(top)
-      })
-      this.rightLiTops = tempArr
-    },
-    // 3、滚动时，获取y轴距离
-    scroll (pos) {
-      this.scrollY = pos.y > 0 ? 0 : Math.abs(pos.y)
-    },
-    // 4、 左侧联动
-    _leftScroll (index) {
-      this.$nextTick(() => {
-        let menuLists = this.$refs.menuList
-        let el = menuLists[index]
-        this.menuScroll.scrollToElement(el, 300, 0, -90)
-      })
-    },
-    // 5、菜单点击
-    changePage (index) {
-      this.scrollY = this.rightLiTops[index]
-      this.shopListScroll.scrollTo(0, -this.scrollY, 300)
-    },
-    // 取消搜索
-    cancelSearch () {
-      this.panelShow = !this.panelShow
     }
   },
   components: {
-    SearchNav,
-    SearchPanel
+    SearchPanel,
+    ShopList
   }
 }
 </script>
@@ -153,8 +54,8 @@ export default {
 @import './../../common/stylus/mixins.styl'
 .search
   width 100%
-  height 100%
-  overflow hidden
+  // height 100%
+  // overflow hidden
   background-color #fff
   position relative
   .search-shop

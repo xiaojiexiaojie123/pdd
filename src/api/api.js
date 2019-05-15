@@ -47,3 +47,9 @@ export const deleteGoods = (params) => axios.post('api/delete_goods', params)
 
 // 退出
 export const loginOut = () => axios.get('api/login_out')
+
+// 获取商品详情信息
+export const getShopDetail = (query) => axios.get('/api/shop_detail', query)
+
+// 获取搜索列表
+export const getSearchList = (query) => axios.get('/api/search_goods', query)

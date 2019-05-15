@@ -25,7 +25,7 @@ import {
   deleteGoods,
   loginOut
 } from '@/api/api'
-
+import router from './../router'
 export default {
   // 首页轮播图
   async reqHomecasual ({commit}) {
@@ -88,12 +88,20 @@ export default {
   addShopCart ({dispatch}, data) {
     const res = addShopCart(data)
     res.then(result => {
+      if (result.code === 1000) {
+        router.push('/login')
+        return
+      }
       dispatch('cartShopList')
     })
   },
   // 获取购物车列表
   async cartShopList ({commit}) {
     const res = await cartShopList()
+    if (res.code === 1000) {
+      router.push('/login')
+      return
+    }
     commit(CART_SHOP_LIST, {cartShopList: res.message.data})
   },
   selectAll ({commit}, {isSelectAll}) {
