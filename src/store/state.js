@@ -11,6 +11,8 @@ export default {
   searchgoodslist: [],
   // 用户信息
   userInfo: {},
+  // 管理员信息
+  managerInfo: {},
   // 购物车列表
   cartShopList: []
 }

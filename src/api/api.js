@@ -53,3 +53,15 @@ export const getShopDetail = (query) => axios.get('/api/shop_detail', query)
 
 // 获取搜索列表
 export const getSearchList = (query) => axios.get('/api/search_goods', query)
+
+// 登陆后台系统
+export const managerlogin = (params) => axios.post('/api/managerlogin', params)
+
+// 查询服装信息
+export const searchGoodsInfo = (query) => axios.get('/api/searchGoodsInfo', query)
+
+// 查询上下架服装信息
+export const updownGoodsInfo = (query) => axios.get('/api/updownGoodsInfo', query)
+
+// 更新上下架服装信息
+export const updownShelfGoodsInfo = (query) => axios.get('/api/updownShelfGoodsInfo', query)

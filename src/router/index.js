@@ -3,27 +3,6 @@ import Router from 'vue-router'
 import store from './../store'
 
 // 一级路由
-// import Home from './../views/Home/Home'
-// import Me from './../views/Me/Me'
-// import UserInfo from './../views/Me/UserInfo'
-// import Setting from './../views/Me/Setting'
-// import Login from './../views/Login/Login'
-// import Chat from './../views/Cart/Cart'
-// import Recommend from './../views/Recommend/Recommend'
-// import Search from './../views/Search/Search'
-
-// 二级路由
-import Hot from './../views/Home/Children/Hot/Hot'
-import Box from './../views/Home/Children/Box'
-import Dress from './../views/Home/Children/Dress'
-import Ele from './../views/Home/Children/Ele'
-import Food from './../views/Home/Children/Food'
-import General from './../views/Home/Children/General'
-import Man from './../views/Home/Children/Man'
-import Mbaby from './../views/Home/Children/Mbaby'
-import Shirt from './../views/Home/Children/Shirt'
-
-// 一级路由
 const Home = () => import('./../views/Home/Home')
 const Me = () => import('./../views/Me/Me')
 const UserInfo = () => import('./../views/Me/UserInfo')
@@ -33,6 +12,14 @@ const Chat = () => import('./../views/Cart/Cart')
 const Recommend = () => import('./../views/Recommend/Recommend')
 const Search = () => import('./../views/Search/Search')
 const ShopDetail = () => import('./../views/ShopDetail/ShopDetail')
+const Cms = () => import('./../views/Cms/Cms')
+const ManagerLogin = () => import('./../views/ManagerLogin/ManagerLogin')
+
+// 二级路由
+const Hot = () => import('./../views/Home/Children/Hot/Hot')
+const Order = () => import('./../views/Cms/child/Order')
+const Chart = () => import('./../views/Cms/child/Chart')
+const GoodsInfo = () => import('./../views/Cms/child/GoodsInfo')
 
 Vue.use(Router)
 
@@ -57,23 +44,7 @@ const router = new Router({
           meta: {
             tabBarShow: true
           }
-        },
-        // 服饰版块
-        {path: 'dress', component: Dress},
-        // 鞋包版块
-        {path: 'box', component: Box},
-        // 母婴版块
-        {path: 'mbaby', component: Mbaby},
-        // 百货版块
-        {path: 'general', component: General},
-        // 食品版块
-        {path: 'food', component: Food},
-        // 内衣版块
-        {path: 'shirt', component: Shirt},
-        // 男装版块
-        {path: 'man', component: Man},
-        // 电器版块
-        {path: 'ele', component: Ele}
+        }
       ]
     },
     {
@@ -120,6 +91,29 @@ const router = new Router({
     {
       path: '/shop_detail',
       component: ShopDetail
+    },
+    {
+      path: '/cms',
+      component: Cms,
+      redirect: '/cms/goodsInfo',
+      children: [
+        {
+          path: 'order',
+          component: Order
+        },
+        {
+          path: 'chart',
+          component: Chart
+        },
+        {
+          path: 'goodsInfo',
+          component: GoodsInfo
+        }
+      ]
+    },
+    {
+      path: '/managerLogin',
+      component: ManagerLogin
     }
   ],
   mode: 'history'
