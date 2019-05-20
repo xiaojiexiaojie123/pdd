@@ -76,6 +76,10 @@ export default {
     flex 1
     text-align center
     font-size 14px
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     img
       width 35%
       margin-bottom 2px

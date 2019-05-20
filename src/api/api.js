@@ -7,7 +7,7 @@ export const getHomecasual = () => axios.get('api/homecasual')
 export const getHomenav = () => axios.get('api/homenav')
 
 // 获取首页商品列表
-export const getHomeShopList = () => axios.get('api/homeshoplist')
+export const getHomeShopList = (query) => axios.get('api/homeshoplist', query)
 
 // 获取推荐商品列表
 export const getRecommendShopList = (params) => axios.get('api/recommendshoplist', params)
@@ -65,3 +65,27 @@ export const updownGoodsInfo = (query) => axios.get('/api/updownGoodsInfo', quer
 
 // 更新上下架服装信息
 export const updownShelfGoodsInfo = (query) => axios.get('/api/updownShelfGoodsInfo', query)
+
+// 上传服装信息
+export const uploadGoodsInfo = (query) => axios.get('/api/uploadGoodsInfo', query)
+
+// 查询订单信息
+export const searchOrdersInfo = (query) => axios.get('/api/searchOrdersInfo', query)
+
+// 查询订单排名
+export const goodsRank = (query) => axios.get('/api/goodsRank', query)
+
+// 查询订单排名
+export const orderLatestSeven = () => axios.get('/api/orderLatestSeven')
+
+// 查询用户信息
+export const searchUserInfo = (query) => axios.get('/api/searchUserInfo', query)
+
+// 查询管理员信息
+export const searchManagerInfo = (query) => axios.get('/api/searchManagerInfo', query)
+
+// 删除管理员信息
+export const delManagerInfo = (query) => axios.get('/api/delManagerInfo', query)
+
+// 增加管理员信息
+export const addManagerInfo = (query) => axios.get('/api/addManagerInfo', query)

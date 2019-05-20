@@ -20,6 +20,12 @@
           <input type="text" v-model="user_name">
         </p>
       </div>
+      <div class="item">
+        <span class="left">设置密码</span>
+        <p class="right">
+          <input type="password" v-model="password">
+        </p>
+      </div>
       <div class="item" @click="sheetVisible = true">
         <span class="left">性别</span>
         <p class="right">
@@ -27,7 +33,7 @@
         </p>
       </div>
       <div class="item">
-        <span class="left">常住地</span>
+        <span class="left">地址</span>
         <p class="right">
           <input type="text" v-model="user_address" />
         </p>
@@ -68,6 +74,7 @@
 <script>
 import { mapState } from 'vuex'
 import { Toast } from 'mint-ui'
+import md5 from 'js-md5'
 export default {
   name: 'user_info',
   data () {
@@ -77,6 +84,7 @@ export default {
       user_phone: '',
       user_sex: '',
       user_address: '',
+      password: '',
       user_birthday: '',
       user_sign: '',
       user_avatar: '',
@@ -127,6 +135,7 @@ export default {
         user_address: this.user_address,
         user_birthday: this.user_birthday,
         user_sign: this.user_sign,
+        password: md5(this.password),
         callback: this.callback
       }
       this.$store.dispatch('updateUserInfo', data)
@@ -204,11 +213,10 @@ export default {
     background red
     color #fff
     width 90%
-    padding .1rem 0
     margin .2rem auto 0
     text-align center
-    height .35rem
-    line-height .35rem
+    height .5rem
+    line-height .5rem
     font-size .3rem
     border-radius .08rem
 </style>

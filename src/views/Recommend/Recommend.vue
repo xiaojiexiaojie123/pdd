@@ -8,7 +8,7 @@
           <div class="item-bottom">
             <div class="bottom-left">
               <span class="item-price">￥{{ item.price / 100 }}</span>
-              <span class="item-counter">{{ item.sales_tip }}</span>
+              <span class="item-counter" v-if="item.sales_tip">{{ item.sales_tip.substr(2) }}</span>
             </div>
             <div class="bottom-right" @click="addShopCart(item, index)">
               加入购物车

@@ -9,8 +9,8 @@
           <span class="normal-price"><span class="rmb">￥</span>{{(goodInfo.normal_price / 100).toFixed(1)}}</span>
           <span class="market-price">￥{{goodInfo.market_price / 100}}</span>
         </div>
-        <div class="sales">
-          {{goodInfo.sales_tip}}
+        <div class="sales" v-if="goodInfo.sales_tip">
+          已购{{goodInfo.sales_tip.substr(2)}}
         </div>
       </div>
       <div class="title">
@@ -22,7 +22,7 @@
       </div>
       <div class="rating">
         <div class="top">
-          <span>商品评论(47067)</span>
+          <span>商品评论(2)</span>
           <span>查看全部＞</span>
         </div>
         <div class="desc">
@@ -37,10 +37,10 @@
             <div class="pic">
               <img src="http://t21img.yangkeduo.com/a/813368c777d353711ce36c721c2f19be8e908ef4-1517021651?imageMogr2/thumbnail/100x" alt="">
             </div>
-            <span>小杰</span>
+            <span>哈哈</span>
           </div>
           <div class="words">
-            款式好看，收到货很喜欢😘毛衣是长款的，物美还不贵超值，打算再入手其他颜色，喜欢的亲们不要错过哦……实物毛衣是黑色，颜色正，忽略我手机像素问题😄
+            款式好看，收到货很喜欢😘毛，物美还不贵超值，打算再入手其他颜色，喜欢的亲们不要错过哦……实物毛衣是黑色，颜色正，忽略我手机像素问题😄
           </div>
         </div>
         <div class="user">
@@ -51,10 +51,13 @@
             <span>小杰</span>
           </div>
           <div class="words">
-            款式好看，收到货很喜欢😘毛衣是长款的，物美还不贵超值，打算再入手其他颜色，喜欢的亲们不要错过哦……实物毛衣是黑色，颜色正，忽略我手机像素问题😄
+            非常喜欢，还会再买
           </div>
         </div>
       </div>
+    </div>
+    <div class="btn-wrap">
+      <div class="buy-btn tada" @click="toPayment">立即购买</div>
     </div>
   </div>
 </template>
@@ -81,12 +84,41 @@ export default {
           this.goodInfo = result.message.good_info
         }
       })
+    },
+    toPayment () {
+      this.$router.push('/payment')
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+.btn-wrap
+  position fixed
+  left 50%
+  transform translateX(-50%)
+  width: 100%
+  .buy-btn
+    width: 80%
+    height: .6rem;
+    bottom .2rem
+    margin 0 auto
+    background: linear-gradient(to top, #CD0000, #EE4000)
+    border-radius .3rem
+    line-height .6rem
+    text-align center
+    font-size .35rem
+    font-weight bold
+    color #fff
+  .tada
+    animation tada 1s infinite
+  @keyframes tada
+    0%
+      transform scale(1)
+    50%
+      transform scale(.9)
+    100%
+      transform scale(1)
 .content
   .good-img
     img
@@ -114,7 +146,7 @@ export default {
   .title
     padding 0 .2rem
     background #fff
-    height .6rem
+    height .9rem
     font-size .3rem
     font-weight 700
     overflow hidden
@@ -161,6 +193,7 @@ export default {
       display flex
       justify-content flex-start
       align-items center
+      padding-top .07rem
       .pic
         width .5rem
         height .5rem

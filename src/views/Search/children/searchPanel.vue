@@ -9,32 +9,15 @@
     <div class="late-search" v-show="showSearchTip">
       <div class="title">
         <div class="name">
-          最近搜索
+          热门搜索
         </div>
         <div class="delete"></div>
       </div>
       <ul>
-        <li>黑头仪</li>
-        <li>黑头仪</li>
-        <li>黑头仪</li>
-        <li>黑头仪</li>
-        <li>黑头仪</li>
-        <li>黑头仪</li>
-      </ul>
-    </div>
-    <div class="hot-search" v-show="showSearchTip">
-      <div class="title">
-        <div class="hot-name">
-          热门搜索
-        </div>
-      </div>
-      <ul class="hot-word">
-        <li>黑头仪</li>
-        <li>黑头仪</li>
-        <li>黑头仪</li>
-        <li>黑头仪</li>
-        <li>黑头仪</li>
-        <li>黑头仪</li>
+        <li>上衣</li>
+        <li>短袖</li>
+        <li>裙子</li>
+        <li>运动服</li>
       </ul>
     </div>
   </div>

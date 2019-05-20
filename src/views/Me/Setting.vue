@@ -52,11 +52,10 @@ export default {
     margin-bottom .15rem
   .loginOut
     background #fff
-    padding .15rem 0
     margin .2rem auto 0
     text-align center
-    height .35rem
-    line-height .35rem
+    height .5rem
+    line-height .5rem
     font-size .3rem
     border-radius .08rem
 </style>

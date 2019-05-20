@@ -19,10 +19,6 @@
           "style": true
         }
       ]
-    ],
-    ["import", {
-      "libraryName": "iview",
-      "libraryDirectory": "src/components"
-    }]
+    ]
   ]
 }

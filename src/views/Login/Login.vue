@@ -78,6 +78,7 @@
 <script>
 import { getVerification, passwordLogin, verificationLogin } from './../../api/api'
 import { mapActions } from 'vuex'
+import md5 from 'js-md5'
 export default {
   name: 'login',
   data () {
@@ -156,7 +157,7 @@ export default {
         if (this.usernameBlur() && this.passwordBlur() && this.captchaBlur()) {
           const res = await passwordLogin({
             username: this.username,
-            password: this.password,
+            password: md5(this.password),
             captcha: this.captcha
           })
           if (res.code === 1001) {

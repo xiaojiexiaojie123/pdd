@@ -6,8 +6,8 @@
         <h4 class="item-title">{{ item.goods_name }}</h4>
         <div class="item-bottom">
           <div class="bottom-left">
-            <span class="item-price">${{ item.normal_price / 100 }}</span>
-            <span class="item-counter">{{ item.sales_tip }}</span>
+            <span class="item-price">￥{{ item.normal_price / 100 }}</span>
+            <span class="item-counter" v-if="item.sales_tip !== null">已购{{ item.sales_tip.substr(2) }}</span>
           </div>
           <div class="bottom-right">
             <div class="item-user">
@@ -15,7 +15,7 @@
             </div>
             <div class="item-buy" @click.stop="addShopCart(item, index)">
               加入购物
-              <div :class="{addSucc: currentIndex === index}">+1</div>  
+              <div :class="{addSucc: currentIndex === index}">+1</div>
             </div>
           </div>
         </div>

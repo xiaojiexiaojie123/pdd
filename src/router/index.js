@@ -14,12 +14,15 @@ const Search = () => import('./../views/Search/Search')
 const ShopDetail = () => import('./../views/ShopDetail/ShopDetail')
 const Cms = () => import('./../views/Cms/Cms')
 const ManagerLogin = () => import('./../views/ManagerLogin/ManagerLogin')
+const Payment = () => import('./../views/Payment/Payment')
 
 // 二级路由
 const Hot = () => import('./../views/Home/Children/Hot/Hot')
 const Order = () => import('./../views/Cms/child/Order')
 const Chart = () => import('./../views/Cms/child/Chart')
 const GoodsInfo = () => import('./../views/Cms/child/GoodsInfo')
+const User = () => import('../views/Cms/child/User')
+const Manager = () => import('../views/Cms/child/Manager')
 
 Vue.use(Router)
 
@@ -35,7 +38,7 @@ const router = new Router({
       meta: {
         tabBarShow: true
       },
-      redirect: '/home/hot',
+      // redirect: '/home/hot',
       children: [
         // 热门版块
         {
@@ -108,12 +111,24 @@ const router = new Router({
         {
           path: 'goodsInfo',
           component: GoodsInfo
+        },
+        {
+          path: 'user',
+          component: User
+        },
+        {
+          path: 'manager',
+          component: Manager
         }
       ]
     },
     {
       path: '/managerLogin',
       component: ManagerLogin
+    },
+    {
+      path: '/payment',
+      component: Payment
     }
   ],
   mode: 'history'

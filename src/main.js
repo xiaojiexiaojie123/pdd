@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import LyTab from 'ly-tab'
+import iView from 'iview'
 import 'mint-ui/lib/style.css'
 import 'iview/dist/styles/iview.css'
 import './common/stylus/rewrite.styl'
@@ -15,14 +16,8 @@ Vue.component(SwipeItem.name, SwipeItem)
 Vue.component(DatetimePicker.name, DatetimePicker)
 Vue.component(Actionsheet.name, Actionsheet)
 
-import { Button, Input, Form, FormItem, Table } from 'iview'
-Vue.component('Button', Button)
-Vue.component('Input', Input)
-Vue.component('Form', Form)
-Vue.component('FormItem', FormItem)
-Vue.component('Table', Table)
-
 Vue.use(LyTab)
+Vue.use(iView)
 
 Vue.config.productionTip = false
 
