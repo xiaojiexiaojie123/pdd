@@ -89,3 +89,18 @@ export const delManagerInfo = (query) => axios.get('/api/delManagerInfo', query)
 
 // 增加管理员信息
 export const addManagerInfo = (query) => axios.get('/api/addManagerInfo', query)
+
+// 获取订单信息
+export const getUserOrder = (query) => axios.get('/api/get_user_order', query)
+
+// 生成订单信息
+export const payOrder = (query) => axios.get('/api/payOrder', query)
+
+// 发货
+export const deliverGoods = (query) => axios.get('/api/deliverGoods', query)
+
+// 评论
+export const uploadComment = (query) => axios.get('/api/uploadComment', query)
+
+// 获取评论
+export const getComment = (query) => axios.get('/api/getComment', query)

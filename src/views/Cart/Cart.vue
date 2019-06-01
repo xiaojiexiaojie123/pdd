@@ -7,19 +7,28 @@
         <label for="selectAll">全选</label>
         <span class="total">合计：￥<span class="num">{{totalPrice / 100 | moenyFormat(totalPrice)}}</span></span>
       </div>
-      <div class="right">
+      <div class="right" @click="payOrder">
         去结算
       </div>
     </div>
     <div class="cartIsNull" v-else>购物车空空如也</div>
+    <wechat-pay v-if="showWechatPay" :paySucess="paySucess" :goodInfo="goodInfo"></wechat-pay>
   </div>
 </template>
 
 <script>
+import WechatPay from './../../components/WechatPay/WechatPay'
 import CartItem from './child/CartItem'
-import { mapState } from 'vuex'
+import { payOrder } from './../../api/api.js'
 export default {
   name: 'cart',
+  data () {
+    return {
+      userInfo: this.$store.state.userInfo,
+      goodInfo: {normal_price: 0},
+      showWechatPay: false
+    }
+  },
   computed: {
     cartShopList () {
       return this.$store.state.cartShopList
@@ -48,6 +57,7 @@ export default {
         this.cartShopList.forEach(good => {
           if (good.checked === true) {
             totalPrice += good.price * good.buy_count
+            this.goodInfo.normal_price = totalPrice
           }
         })
       }
@@ -67,10 +77,53 @@ export default {
     selectAll () {
       console.log(this.isSelectAll)
       this.$store.dispatch('selectAll', {isSelectAll: !this.isSelectAll})
+    },
+    payOrder () {
+      if (!this.userInfo.user_id) {
+        this.$router.push('/login')
+        return
+      }
+      let isSelect = false
+      this.cartShopList.forEach((item, index) => {
+        if (item.checked) {
+          isSelect = true
+        }
+      })
+      if (isSelect) {
+        this.showWechatPay = true
+      } else {
+        this.$Message.info('请选择服装')
+      }
+    },
+    paySucess () {
+      console.log(this.cartShopList)
+      let payOrderList = []
+      this.cartShopList.forEach((item, index) => {
+        if (item.checked) {
+          var data = {
+            user_id: this.userInfo.user_name,
+            phone: this.userInfo.phone,
+            address: this.userInfo.user_address,
+            receiveName: this.userInfo.user_name,
+            goods_id: item.goods_id,
+            price: item.price,
+            channel: 1,
+            id: this.userInfo.user_id
+          }
+          const res = payOrder(data)
+          payOrderList.push(res)
+        }
+      })
+      Promise.all(payOrderList).then(result => {
+        // this.$router.replace('/me')
+        this.$Message.success('结算成功')
+        this.$store.dispatch('cartShopList')
+      })
     }
   },
   components: {
-    CartItem
+    CartItem,
+    WechatPay
   }
 }
 </script>

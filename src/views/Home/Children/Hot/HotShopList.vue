@@ -7,7 +7,7 @@
         <div class="item-bottom">
           <div class="bottom-left">
             <span class="item-price">￥{{ item.normal_price / 100 }}</span>
-            <span class="item-counter" v-if="item.sales_tip !== null">已购{{ item.sales_tip.substr(2) }}</span>
+            <span class="item-counter" v-if="item.sales_tip !== null">已购{{ item.sales_tip }}件</span>
           </div>
           <div class="bottom-right">
             <div class="item-user">
@@ -15,7 +15,7 @@
             </div>
             <div class="item-buy" @click.stop="addShopCart(item, index)">
               加入购物
-              <div :class="{addSucc: currentIndex === index}">+1</div>
+              <div :class="{addSucc: currentIndex === index}" v-show="currentIndex === index">+1</div>
             </div>
           </div>
         </div>
@@ -29,7 +29,7 @@ export default {
   name: 'shoplist',
   data () {
     return {
-      currentIndex: null // 加入购物车商品索引
+      currentIndex: -1 // 加入购物车商品索引
     }
   },
   props: {
@@ -43,6 +43,7 @@ export default {
         this.currentIndex = null
       }, 1000)
       this.$store.dispatch('addShopCart', goods)
+      this.$store.dispatch('cartShopList')
     },
     goShopDetail (goods_id) {
       this.$router.push({path: '/shop_detail', query: {goods_id}})

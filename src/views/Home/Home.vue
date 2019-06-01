@@ -52,8 +52,6 @@ export default {
       homecasual: [
         {imgurl: require('./imgs/swiper/s1.png')},
         {imgurl: require('./imgs/swiper/s2.png')},
-        {imgurl: require('./imgs/swiper/s3.png')},
-        {imgurl: require('./imgs/swiper/s4.png')},
         {imgurl: require('./imgs/swiper/s5.png')},
         {imgurl: require('./imgs/swiper/s6.png')},
         {imgurl: require('./imgs/swiper/s7.png')},

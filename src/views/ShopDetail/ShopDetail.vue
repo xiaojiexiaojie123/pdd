@@ -22,36 +22,37 @@
       </div>
       <div class="rating">
         <div class="top">
-          <span>商品评论(2)</span>
+          <span>商品评论({{ commentList.length + 1 }})</span>
           <span>查看全部＞</span>
         </div>
         <div class="desc">
-          <ul>
-            <li>质量好(2612)</li>
-            <li>衣服好(1000)</li>
-            <li>快递快(535)</li>
-          </ul>
+<!--          <ul>-->
+<!--            <li>质量好(2612)</li>-->
+<!--            <li>衣服好(1000)</li>-->
+<!--            <li>快递快(535)</li>-->
+<!--          </ul>-->
+        </div>
+        <div class="user" v-for="(comment, index) in commentList" :key="index">
+          <div class="name">
+            <div class="pic">
+              <img v-if="comment.user_avatar !== 'null'" :src="comment.user_avatar" alt="">
+              <img v-else src="./img/avatar.png" alt="">
+            </div>
+            <span>{{ comment.user_name }}</span>
+          </div>
+          <div class="words">
+            {{ comment.message }}
+          </div>
         </div>
         <div class="user">
           <div class="name">
             <div class="pic">
               <img src="http://t21img.yangkeduo.com/a/813368c777d353711ce36c721c2f19be8e908ef4-1517021651?imageMogr2/thumbnail/100x" alt="">
             </div>
-            <span>哈哈</span>
+            <span>hah</span>
           </div>
           <div class="words">
             款式好看，收到货很喜欢😘毛，物美还不贵超值，打算再入手其他颜色，喜欢的亲们不要错过哦……实物毛衣是黑色，颜色正，忽略我手机像素问题😄
-          </div>
-        </div>
-        <div class="user">
-          <div class="name">
-            <div class="pic">
-              <img src="http://t21img.yangkeduo.com/a/813368c777d353711ce36c721c2f19be8e908ef4-1517021651?imageMogr2/thumbnail/100x" alt="">
-            </div>
-            <span>小杰</span>
-          </div>
-          <div class="words">
-            非常喜欢，还会再买
           </div>
         </div>
       </div>
@@ -59,24 +60,31 @@
     <div class="btn-wrap">
       <div class="buy-btn tada" @click="toPayment">立即购买</div>
     </div>
+    <wechat-pay v-if="showWechatPay" :paySucess="paySucess" :goodInfo="goodInfo"></wechat-pay>
   </div>
 </template>
 
 <script>
-import { getShopDetail } from './../../api/api.js'
+import { getShopDetail, payOrder, getComment } from './../../api/api.js'
+import WechatPay from './../../components/WechatPay/WechatPay'
 export default {
   name: 'shopDetail',
   data () {
     return {
-      goodInfo: {}
+      goodInfo: {},
+      userInfo: this.$store.state.userInfo,
+      showWechatPay: false,
+      commentList: [],
+      avatar: require('./img/avatar.png')
     }
   },
   mounted () {
     this.getShopDetail()
+    console.log(this.userInfo)
   },
   methods: {
     getShopDetail () {
-      var goods_id = this.$route.query.goods_id;
+      let goods_id = this.$route.query.goods_id;
       const res = getShopDetail({goods_id})
       res.then(result => {
         console.log(result)
@@ -84,10 +92,43 @@ export default {
           this.goodInfo = result.message.good_info
         }
       })
+      const res1 = getComment({goods_id})
+      res1.then(result => {
+        console.log(result)
+        if (result.code === 200) {
+          this.commentList = result.data
+          console.log(this.commentList, 'list')
+        }
+      })
     },
     toPayment () {
-      this.$router.push('/payment')
+      if (!this.userInfo.user_id) {
+        this.$router.push('/login')
+        return
+      }
+      this.showWechatPay = true
+    },
+    paySucess () {
+      let data = {
+        user_id: this.userInfo.user_name,
+        goods_id: this.goodInfo.goods_id,
+        address: this.userInfo.user_address,
+        receiveName: this.userInfo.user_name,
+        price: this.goodInfo.normal_price,
+        phone: this.userInfo.phone
+      }
+      const res = payOrder(data)
+      res.then(result => {
+        if (result.code === 200) {
+          this.$Message.success('购买成功')
+          this.$store.dispatch('cartShopList')
+          // this.$router.push('/me')
+        }
+      })
     }
+  },
+  components: {
+    WechatPay
   }
 }
 </script>

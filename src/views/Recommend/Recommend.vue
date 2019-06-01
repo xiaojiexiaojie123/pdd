@@ -2,13 +2,13 @@
   <div class="recommend-container">
     <div class="recommend-inner" ref="recommendInner">
       <ul class="recommend">
-        <li class="recommend-item" v-for="(item, index) in recommendshoplist" :key=index>
+        <li class="recommend-item" v-for="(item, index) in recommendshoplist" :key=index @click="goShopDetail(item.goods_id)">
           <img :src="item.image_url" alt="">
           <p>{{ item.goods_name }}</p>
           <div class="item-bottom">
             <div class="bottom-left">
-              <span class="item-price">￥{{ item.price / 100 }}</span>
-              <span class="item-counter" v-if="item.sales_tip">{{ item.sales_tip.substr(2) }}</span>
+              <span class="item-price">￥{{ item.normal_price / 100 }}</span>
+              <span class="item-counter" v-if="item.sales_tip">已购{{ item.sales_tip }}件</span>
             </div>
             <div class="bottom-right" @click="addShopCart(item, index)">
               加入购物车
@@ -49,6 +49,9 @@ export default {
     }
   },
   methods: {
+    goShopDetail (goods_id) {
+      this.$router.push({path: '/shop_detail', query: {goods_id}})
+    },
     // 初始化
     init () {
       this.$nextTick(() => {

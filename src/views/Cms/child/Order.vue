@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { searchOrdersInfo } from './../../../api/api'
+import { searchOrdersInfo, deliverGoods } from './../../../api/api'
 export default  {
   name: 'order',
   data () {
@@ -64,9 +64,47 @@ export default  {
         {
           title: '收件地址',
           key: 'address'
+        },
+        {
+          title: '状态',
+          key: 'goods_status'
+        },
+        {
+          title: '操作',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: (h, params) => {
+            if (params.row.goods_status == '已付款') {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      console.log(params.row, params.row.goods_name, 'shsh')
+                      this.deliverGoods(params.row)
+                    }
+                  }
+                }, '发货')
+              ])
+            }
+          }
         }
       ],
-      orderData: []
+      orderData: [],
+      statusMap: {
+        '1': '未支付',
+        '2': '已付款',
+        '3': '已发货',
+        '4': '已收货',
+        '5': '已评论'
+      }
     }
   },
   methods: {
@@ -82,6 +120,20 @@ export default  {
         if (result.message.code === 200) {
           console.log(result)
           this.orderData = result.message.data
+          this.orderData.map((item, index) => {
+            item.goods_status = this.statusMap[item.goods_status]
+            item.price = '￥' + (item.price / 100).toFixed(2)
+            return item
+          })
+        }
+      })
+    },
+    deliverGoods (orderInfo) {
+      const res = deliverGoods({order_id: orderInfo.order_id})
+      res.then(result => {
+        if (result.message.code === 200) {
+          this.$Message.success('发货成功')
+          this.searOrdersInfo()
         }
       })
     },

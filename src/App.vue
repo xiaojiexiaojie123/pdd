@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <!-- keep-alive可以对数据进行缓存 -->
-    <keep-alive> 
+<!--    <keep-alive> -->
       <router-view/>
-    </keep-alive>
+<!--    </keep-alive>-->
     
     <tab-bar></tab-bar>
   </div>
